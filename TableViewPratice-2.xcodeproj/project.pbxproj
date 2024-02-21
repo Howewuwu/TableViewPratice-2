@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		9C37C5172B83980700001020 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37C5162B83980700001020 /* AppDelegate.swift */; };
 		9C37C5192B83980700001020 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37C5182B83980700001020 /* SceneDelegate.swift */; };
-		9C37C51B2B83980700001020 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37C51A2B83980700001020 /* ViewController.swift */; };
-		9C37C51E2B83980700001020 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C37C51C2B83980700001020 /* Main.storyboard */; };
 		9C37C5202B83980900001020 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C37C51F2B83980900001020 /* Assets.xcassets */; };
-		9C37C5232B83980900001020 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C37C5212B83980900001020 /* LaunchScreen.storyboard */; };
+		9C37C52B2B84347400001020 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37C52A2B84347400001020 /* ToDoTableViewController.swift */; };
+		9C37C52D2B8434D000001020 /* ToDoDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37C52C2B8434D000001020 /* ToDoDetailTableViewController.swift */; };
+		9C37C52F2B8434ED00001020 /* ToDoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37C52E2B8434ED00001020 /* ToDoTableViewCell.swift */; };
+		9C37C5312B8434FF00001020 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37C5302B8434FF00001020 /* ToDo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9C37C5132B83980700001020 /* TableViewPratice-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TableViewPratice-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C37C5162B83980700001020 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C37C5182B83980700001020 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9C37C51A2B83980700001020 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		9C37C51D2B83980700001020 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9C37C51F2B83980900001020 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9C37C5222B83980900001020 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9C37C5242B83980900001020 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9C37C52A2B84347400001020 /* ToDoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewController.swift; sourceTree = "<group>"; };
+		9C37C52C2B8434D000001020 /* ToDoDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoDetailTableViewController.swift; sourceTree = "<group>"; };
+		9C37C52E2B8434ED00001020 /* ToDoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewCell.swift; sourceTree = "<group>"; };
+		9C37C5302B8434FF00001020 /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,10 +60,11 @@
 			children = (
 				9C37C5162B83980700001020 /* AppDelegate.swift */,
 				9C37C5182B83980700001020 /* SceneDelegate.swift */,
-				9C37C51A2B83980700001020 /* ViewController.swift */,
-				9C37C51C2B83980700001020 /* Main.storyboard */,
+				9C37C5302B8434FF00001020 /* ToDo.swift */,
+				9C37C52A2B84347400001020 /* ToDoTableViewController.swift */,
+				9C37C52E2B8434ED00001020 /* ToDoTableViewCell.swift */,
+				9C37C52C2B8434D000001020 /* ToDoDetailTableViewController.swift */,
 				9C37C51F2B83980900001020 /* Assets.xcassets */,
-				9C37C5212B83980900001020 /* LaunchScreen.storyboard */,
 				9C37C5242B83980900001020 /* Info.plist */,
 			);
 			path = "TableViewPratice-2";
@@ -125,9 +128,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C37C5232B83980900001020 /* LaunchScreen.storyboard in Resources */,
 				9C37C5202B83980900001020 /* Assets.xcassets in Resources */,
-				9C37C51E2B83980700001020 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,32 +139,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C37C51B2B83980700001020 /* ViewController.swift in Sources */,
+				9C37C5312B8434FF00001020 /* ToDo.swift in Sources */,
+				9C37C52D2B8434D000001020 /* ToDoDetailTableViewController.swift in Sources */,
+				9C37C52B2B84347400001020 /* ToDoTableViewController.swift in Sources */,
+				9C37C52F2B8434ED00001020 /* ToDoTableViewCell.swift in Sources */,
 				9C37C5172B83980700001020 /* AppDelegate.swift in Sources */,
 				9C37C5192B83980700001020 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		9C37C51C2B83980700001020 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9C37C51D2B83980700001020 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		9C37C5212B83980900001020 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9C37C5222B83980900001020 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9C37C5252B83980900001020 /* Debug */ = {
@@ -296,10 +281,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TableViewPratice-2/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = ToDoTableViewController;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -324,10 +307,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "TableViewPratice-2/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = ToDoTableViewController;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
