@@ -8,10 +8,22 @@
 import UIKit
 import PhotosUI
 
+
+
+protocol ToDoDetailTableViewControllerDelegate: AnyObject {
+    func toDoDetailTableViewControllerDidSave(_ toDo: ToDo)
+}
+
+
 class ToDoDetailTableViewController: UITableViewController {
     
     
-    var toDo: ToDO?
+    var toDo: ToDo?
+    
+    weak var delegate: ToDoDetailTableViewControllerDelegate?
+    
+    var saveButton: UIBarButtonItem!
+    var cancelButton: UIBarButtonItem!
     
     var isCompleteButton = UIButton()
     var titleTextField = UITextField()
@@ -40,22 +52,30 @@ class ToDoDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         
         if let toDo = toDo {
-            navigationItem.title = "To - Do"
+            navigationItem.title = "事件"
             titleTextField.text = toDo.title
             isCompleteButton.isSelected = toDo.isComplete
+            noteImageName = toDo.imageName
             dateDate = toDo.dueDate
             notesTextView.text = toDo.notes
-            noteImageName = toDo.imageName
         } else {
+            navigationItem.title = "新事件"
             dateDate = Calendar.current.date(byAdding: .day, value: 1, to: dateDate)!
         }
         
         dueDateDatePicker.date = dateDate
         upDueDateLabel(date: dateDate)
         
+        updateCompleteButtonImage()
+        
         // 設定導航欄按鈕
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: .plain, target: self, action: #selector(cancelAction))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "儲存", style: .done, target: self, action: #selector(saveAction))
+        saveButton = UIBarButtonItem(title: "儲存", style: .done, target: self, action: #selector(saveAction))
+        cancelButton = UIBarButtonItem(title: "取消", style: .plain, target: self, action: #selector(cancelAction))
+        navigationItem.rightBarButtonItem = saveButton
+        navigationItem.leftBarButtonItem = cancelButton
+        
+        updateSaveButtonState()
+        
         
         // 設定表格視圖為靜態樣式
         tableView = UITableView(frame: .zero, style: .grouped)
@@ -98,7 +118,9 @@ class ToDoDetailTableViewController: UITableViewController {
             cell.contentView.addSubview(titleTextField)
             
             titleTextField.placeholder = "記得要..."
-            isCompleteButton.setImage(UIImage(systemName: "circle"), for: .normal)
+            titleTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+            
+            isCompleteButton.addTarget(self, action: #selector(isCompleteButtonTapped), for: .touchUpInside)
             
             
             NSLayoutConstraint.activate([
@@ -147,6 +169,7 @@ class ToDoDetailTableViewController: UITableViewController {
             } else {
                 //  due datePicker
                 dueDateDatePicker.preferredDatePickerStyle = .wheels
+                dueDateDatePicker.addTarget(self, action: #selector(selectDate), for: .valueChanged)
                 dueDateDatePicker.translatesAutoresizingMaskIntoConstraints = false
                 cell.contentView.addSubview(dueDateDatePicker)
                 
@@ -237,26 +260,81 @@ class ToDoDetailTableViewController: UITableViewController {
             present(picker, animated: true)
         }
     }
+    
+    
+    
+    func updateCompleteButtonImage() {
+        let buttonStateImageName = isCompleteButton.isSelected ? "checkmark.circle.fill" : "circle"
+        isCompleteButton.setImage(UIImage(systemName: buttonStateImageName), for: .normal)
+    }
 
     
     
     
     func upDueDateLabel(date: Date) {
-        
         dueDateLabel.text = date.formatted(.dateTime.month(.defaultDigits).day().year(.twoDigits).hour().minute())
-        
     }
     
     
     
+    func updateSaveButtonState() {
+        let shouldEnableSaveButton = titleTextField.text?.isEmpty == false
+        saveButton.isEnabled = shouldEnableSaveButton
+    }
+    
+    
+    
+    @objc func isCompleteButtonTapped(_ sender: UIButton) {
+        isCompleteButton.isSelected.toggle()
+        updateCompleteButtonImage()
+    }
+    
+    
+    
+    @objc func editingChanged(sender: UITextField) {
+        updateSaveButtonState()
+    }
+    
+    
+    
+    @objc func selectDate(sender: UIDatePicker) {
+        upDueDateLabel(date: sender.date)
+    }
+    
+    
     @objc func saveAction() {
-        // 儲存按鈕的動作
+        
+        let title = titleTextField.text!
+        let isComplete = isCompleteButton.isSelected
+        let dueDate = dueDateDatePicker.date
+        let notes = notesTextView.text
+        
+        if toDo != nil {
+            toDo?.title = title
+            toDo?.isComplete = isComplete
+            toDo?.dueDate = dueDate
+            toDo?.notes = notes
+        } else {
+            toDo = ToDo(title: title, imageName: "", isComplete: isComplete, dueDate: dueDate, notes: notes)
+        }
+        
+        
+        if let indexOfExistingToDo = ToDoTableViewController().toDos.firstIndex(of: toDo!) {
+            ToDoTableViewController().toDos[indexOfExistingToDo] = toDo!
+        } else {
+            ToDoTableViewController().toDos.append(toDo!)
+        }
+        
+        ToDo.saveToDos(ToDoTableViewController().toDos)
+        delegate?.toDoDetailTableViewControllerDidSave(toDo!)
+        navigationController?.popViewController(animated: true)
+        
     }
     
     
     
     @objc func cancelAction() {
-        // 取消按鈕的動作
+        navigationController?.popViewController(animated: true)
     }
     
     

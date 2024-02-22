@@ -9,13 +9,14 @@ import Foundation
 
 
 
-struct ToDO: Equatable, Codable {
+struct ToDo: Equatable, Codable {
     let id: UUID
     var title: String
     var isComplete: Bool
     var imageName: String?
     var dueDate: Date
     var notes: String?
+    
     
     init(title: String, imageName: String?, isComplete: Bool, dueDate: Date, notes: String?) {
         self.id = UUID()
@@ -32,37 +33,38 @@ struct ToDO: Equatable, Codable {
     static let archiveURL = documentDirectory.appendingPathComponent("toDos").appendingPathExtension("plist")
     
     
-    static func saveToDos(_ toDos: [ToDO]) {
+    static func saveToDos(_ toDos: [ToDo]) {
         
         let propertyListEncoder = PropertyListEncoder()
         let codedToDos = try? propertyListEncoder.encode(toDos)
+        
         try? codedToDos?.write(to: archiveURL, options: .noFileProtection)
         
     }
     
     
-    static func loadToDos() -> [ToDO]? {
+    static func loadToDos() -> [ToDo]? {
         
         guard let codedToDos = try? Data(contentsOf: archiveURL) else { return nil }
         let propertyListDecoder = PropertyListDecoder()
         
-        return try? propertyListDecoder.decode([ToDO].self, from: codedToDos)
+        return try? propertyListDecoder.decode([ToDo].self, from: codedToDos)
         
     }
     
     
-    static func loadSampleToDos() -> [ToDO] {
+    static func loadSampleToDos() -> [ToDo] {
         
-        let toDo1 = ToDO(title: "To-DO 1", imageName: "", isComplete: false, dueDate: Date(), notes: "note1")
-        let toDo2 = ToDO(title: "To-DO 2", imageName: "", isComplete: false, dueDate: Date(), notes: "note2")
-        let toDo3 = ToDO(title: "To-DO 3", imageName: "", isComplete: false, dueDate: Date(), notes: "note3")
+        let toDo1 = ToDo(title: "To-DO 1", imageName: "", isComplete: false, dueDate: Date(), notes: "note1")
+        let toDo2 = ToDo(title: "To-DO 2", imageName: "", isComplete: false, dueDate: Date(), notes: "note2")
+        let toDo3 = ToDo(title: "To-DO 3", imageName: "", isComplete: false, dueDate: Date(), notes: "note3")
         
         return [toDo1, toDo2, toDo3]
         
     }
     
     
-    static func ==(lhs: ToDO, rhs: ToDO) -> Bool {
+    static func ==(lhs: ToDo, rhs: ToDo) -> Bool {
         return lhs.id == rhs.id
     }
     

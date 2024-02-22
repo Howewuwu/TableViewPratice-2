@@ -9,31 +9,42 @@ import UIKit
 
 class ToDoTableViewController: UITableViewController {
     
-    var toDos = [ToDO]()
-    
+    var toDos = [ToDo]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationSetting()
         
-        if let saveToDos = ToDO.loadToDos(){
+        
+        if let saveToDos = ToDo.loadToDos(){
             toDos = saveToDos
-            if toDos.count == 0 { toDos = ToDO.loadSampleToDos()}
+            print(toDos.count)
         } else {
-            toDos = ToDO.loadSampleToDos()
+            toDos = ToDo.loadSampleToDos()
         }
+        
+        
+        
+        navigationSetting()
         
         
         tableView.register(ToDoTableViewCell.self, forCellReuseIdentifier: ToDoTableViewCell.reuseIdentifier)
         
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        
     }
+    
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        
+//        if let savedToDos = ToDo.loadToDos() {
+//            toDos = savedToDos
+//        }
+//        tableView.reloadData()
+//        print(toDos.count)
+//    }
+    
     
     // MARK: - Table view data source
     
@@ -53,6 +64,7 @@ class ToDoTableViewController: UITableViewController {
         let toDo = toDos[indexPath.row]
         ToDoCell.titleLabel.text = toDo.title
         ToDoCell.isCompleteButton.isSelected = toDo.isComplete
+        ToDoCell.delegate = self
         
         return ToDoCell
     }
@@ -70,7 +82,7 @@ class ToDoTableViewController: UITableViewController {
         if editingStyle == .delete {
             toDos.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            ToDO.saveToDos(toDos)
+            ToDo.saveToDos(toDos)
         }
     }
     
@@ -92,36 +104,88 @@ class ToDoTableViewController: UITableViewController {
      */
     
     
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
     
     
     
-    @objc func addButtonTap() {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //        let todo = toDos[indexPath.row]
+        //        let detailViewController = ToDoDetailTableViewController(style: .grouped)
+        //        detailViewController.toDo = todo
+        //        navigationController?.pushViewController(detailViewController, animated: true)
+        
+        let detailViewController = ToDoDetailTableViewController(style: .grouped)
+        detailViewController.delegate = self
+        detailViewController.toDo = toDos[indexPath.row]
+        navigationController?.pushViewController(detailViewController, animated: true)
+        
         
     }
     
     
     
-    
-     // MARK: - Navigation
+    // MARK: - Navigation
     func navigationSetting() {
         
         self.navigationItem.leftBarButtonItem = self.editButtonItem
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTap))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewNoteButtonTap))
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.style = .navigator
-        navigationItem.title = "My To Do"
-        
-        
+        navigationItem.title = "提醒清單"
         
     }
     
     
     
-     
+    @objc func addNewNoteButtonTap() {
+        
+        let detailViewController = ToDoDetailTableViewController(style: .grouped)
+        detailViewController.delegate = self
+        navigationController?.pushViewController(detailViewController, animated: true)
+        
+    }
+    
+    
+    
+}
+
+
+
+// MARK: - extension
+extension ToDoTableViewController: ToDoTableViewCellDelegate {
+    func checkmarkTapped(sender: ToDoTableViewCell) {
+        
+        if let indexPath = tableView.indexPath(for: sender) {
+            var toDo = toDos[indexPath.row]
+            toDo.isComplete.toggle()
+            toDos[indexPath.row] = toDo
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            ToDo.saveToDos(toDos)
+        }
+    }
+}
+
+
+
+extension ToDoTableViewController: ToDoDetailTableViewControllerDelegate {
+    func toDoDetailTableViewControllerDidSave(_ toDo: ToDo) {
+        
+        if let index = toDos.firstIndex(of: toDo) {
+            toDos[index] = toDo
+        } else {
+            toDos.append(toDo)
+        }
+        ToDo.saveToDos(toDos)
+        tableView.reloadData()
+        
+        
+    }
+    
     
 }

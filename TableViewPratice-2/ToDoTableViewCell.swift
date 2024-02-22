@@ -71,8 +71,15 @@ class ToDoTableViewCell: UITableViewCell {
     }
     
     
+    func updateCompleteButtonImage() {
+        let buttonStateImageName = isCompleteButton.isSelected ? "checkmark.circle.fill" : "circle"
+        isCompleteButton.setImage(UIImage(systemName: buttonStateImageName), for: .normal)
+    }
+    
+    
     @objc func completeButtonTapped(sender: UIButton){
-        
+        isCompleteButton.isSelected.toggle()
+        updateCompleteButtonImage()
         delegate?.checkmarkTapped(sender: self)
         
     }
