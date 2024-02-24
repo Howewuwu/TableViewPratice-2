@@ -215,8 +215,10 @@ class ToDoDetailTableViewController: UITableViewController {
             cell.contentView.addSubview(notesTextView)
             
             notesTextView.font = .systemFont(ofSize: 18)  // 設定字體大小
-            notesTextView.text = "memo something"  // 預設文字
             
+            if notesTextView.text.isEmpty {
+                notesTextView.text = "memo something"  // 預設文字
+            }
             // 設定自動布局約束
             NSLayoutConstraint.activate([
                 notesTextView.topAnchor.constraint(equalTo: cell.contentView.topAnchor),
