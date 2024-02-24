@@ -183,7 +183,7 @@ extension ToDoTableViewController: ToDoTableViewCellDelegate {
             toDo.isComplete.toggle() // 切換完成狀態
             toDos[indexPath.row] = toDo
             // 重新加載該行，以更新顯示
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            tableView.reloadRows(at: [indexPath], with: .fade)
             // 保存更新後的待辦事項列表
             ToDo.saveToDos(toDos)
         }

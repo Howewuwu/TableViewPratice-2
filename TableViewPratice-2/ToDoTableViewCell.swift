@@ -94,8 +94,6 @@ class ToDoTableViewCell: UITableViewCell {
         // 通知代理完成按鈕已被點擊，傳遞當前 cell 作為參數
         delegate?.checkmarkTapped(sender: self)
         
-        // 更新完成按鈕的圖像以反映當前的選中狀態
-        updateCompleteButtonImage()
     }
     
 }
